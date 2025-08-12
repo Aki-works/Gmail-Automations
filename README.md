@@ -63,24 +63,8 @@ Automatically classifies emails into:
 
 ---
 
-## 🗂 Workflow Structure
-
-```mermaid
-flowchart TD
-    A[Gmail Trigger] --> B[Text Classifier]
-    B --> C1[Applied]
-    B --> C2[Interviews]
-    B --> C3[Tests]
-    B --> C4[Job Alerts]
-    B --> C5[LinkedIn Messages]
-    B --> C6[Other LinkedIn]
-    B --> C7[Promotions]
-    B --> C8[Rejected]
-    B --> C9[Services]
-    C1 --> D[Message a Model (Google Gemini)]
-    D --> E[Code Node - Parse JSON]
-    E --> F[Google Sheets - Append Row]
-```
+## 🗂 Workflow 
+<img width="1114" height="680" alt="image" src="https://github.com/user-attachments/assets/853db8ff-6cd1-4dc9-8dc3-1a708623059d" />
 
 ---
 
