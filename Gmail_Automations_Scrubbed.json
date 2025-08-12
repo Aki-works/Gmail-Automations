@@ -1,0 +1,594 @@
+{
+  "name": "Gmail Automations",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -432,
+        48
+      ],
+      "id": "e7c1d7f5-0d38-450a-b191-d5bca74e49cd",
+      "name": "Gmail Trigger",
+      "credentials": "[REDACTED]"
+    },
+    {
+      "parameters": {
+        "inputText": "=Subject: {{ $json.headers.subject }}\nText : {{ $json.text }}",
+        "categories": {
+          "categories": [
+            {
+              "category": "Applied",
+              "description": "Emails confirming or acknowledging job applications. Keywords: application received, applied, job application, position applied"
+            },
+            {
+              "category": "Callbacks - Interviews",
+              "description": "Emails scheduling or confirming interviews. Keywords: interview, meeting, discussion, shortlisted, selection process"
+            },
+            {
+              "category": "Callbacks - Test Scheduled",
+              "description": "Emails about scheduled tests or assessments. Keywords: assessment, test, online exam, aptitude test, technical test"
+            },
+            {
+              "category": "LinkedIn - Job Alert",
+              "description": "LinkedIn job alert emails. Keywords: job alert, job recommendation, suggested jobs"
+            },
+            {
+              "category": "LinkedIn - Messaged Me",
+              "description": "Emails about someone messaging on LinkedIn. Keywords: message, connected, recruiter message, reached out"
+            },
+            {
+              "category": "LinkedIn - Others/Ignore",
+              "description": "Other LinkedIn notifications not relevant to job search. Keywords: liked your post, comment, connection suggestion"
+            },
+            {
+              "category": "Promotions",
+              "description": "Marketing or promotion related emails. Keywords: offer, sale, discount, deal, campaign"
+            },
+            {
+              "category": "Rejected",
+              "description": "Emails indicating application rejection. Keywords: unfortunately, regret, not selected, rejection"
+            },
+            {
+              "category": "Services",
+              "description": "Emails about external or subscription-based services. Keywords: service update, subscription, invoice, account"
+            },
+            {
+              "category": "Other",
+              "description": "If the email does not match any above category."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1.1,
+      "position": [
+        -192,
+        48
+      ],
+      "id": "ff3a571f-ef0e-4627-8b57-93976414bdef",
+      "name": "Text Classifier"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -192,
+        512
+      ],
+      "id": "5102b6df-5214-4b52-af54-059ac5ed4ed9",
+      "name": "Google Gemini Chat Model",
+      "credentials": "[REDACTED]"
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_7115730672861033820"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        624,
+        -688
+      ],
+      "id": "3421b60a-62a0-4515-bedd-f432a04f934e",
+      "name": "Applied",
+      "webhookId": "b2748f0d-360b-46b3-8b21-52376b4a6e65",
+      "notesInFlow": false,
+      "credentials": "[REDACTED]"
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_1545128116076200034"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        624,
+        -496
+      ],
+      "id": "e4726deb-dd78-43d7-bf3f-b7993e892f84",
+      "name": "Interviews",
+      "webhookId": "b2748f0d-360b-46b3-8b21-52376b4a6e65",
+      "credentials": "[REDACTED]"
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_964897042905094237"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        624,
+        -304
+      ],
+      "id": "ab0babc7-ee93-45c5-93c2-f67860840fee",
+      "name": "Tests ",
+      "webhookId": "b2748f0d-360b-46b3-8b21-52376b4a6e65",
+      "credentials": "[REDACTED]"
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_6755787380583147002"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        624,
+        -112
+      ],
+      "id": "29669038-9907-4080-b5e9-9a47a489b531",
+      "name": "Job Alerts",
+      "webhookId": "b2748f0d-360b-46b3-8b21-52376b4a6e65",
+      "credentials": "[REDACTED]"
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_3020961820025138811"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        624,
+        80
+      ],
+      "id": "ea54e9dc-82c0-405c-a363-588cea4ca60b",
+      "name": "LinkedIn messages",
+      "webhookId": "b2748f0d-360b-46b3-8b21-52376b4a6e65",
+      "credentials": "[REDACTED]"
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_5212013029102725215"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        624,
+        272
+      ],
+      "id": "a66ad2f5-1895-4da6-8481-7e0bbca472ea",
+      "name": "Other LinkedIn",
+      "webhookId": "b2748f0d-360b-46b3-8b21-52376b4a6e65",
+      "credentials": "[REDACTED]"
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "CATEGORY_PROMOTIONS"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        624,
+        464
+      ],
+      "id": "8db731d9-7f31-44ac-b671-893c3e66ee50",
+      "name": "Promotions",
+      "webhookId": "b2748f0d-360b-46b3-8b21-52376b4a6e65",
+      "credentials": "[REDACTED]"
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_8326119932516339887"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        624,
+        656
+      ],
+      "id": "01929cac-98a2-43e0-95f6-e025ce1f71dd",
+      "name": "Rejected",
+      "webhookId": "b2748f0d-360b-46b3-8b21-52376b4a6e65",
+      "credentials": "[REDACTED]"
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "Label_1774084025436940285"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        624,
+        832
+      ],
+      "id": "400b46a6-ec80-49ee-b516-d89963e998cd",
+      "name": "Services",
+      "webhookId": "b2748f0d-360b-46b3-8b21-52376b4a6e65",
+      "credentials": "[REDACTED]"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You are an assistant that extracts job application details from emails.  \nYour goal is to output only the relevant details in a structured table format for insertion into Google Sheets.  \nYou must use the exact fields provided below, with no extra commentary.  \n\nRequired fields:  \nDate Applied | Company Name | Job Title | Location | Recruiter Name | Recruiter Contact | Job Posting Link | Salary / Compensation | Job Type | Notes  \n\nRules:  \n- If any field is missing in the email, output \"Not Provided\".  \n- \"Date Applied\" should be the date the email was received, in YYYY-MM-DD format.  \n- \"Location\" can be city, country, or 'Remote'.  \n- \"Recruiter Name\" and \"Recruiter Contact\" can be extracted from the signature or sender details.  \n- \"Salary / Compensation\" should include numbers and currency if available.  \n- \"Job Type\" should be one of: Full-time, Part-time, Internship, Contract, Freelance, or Not Provided.  \n- \"Notes\" should summarize any extra relevant information in under 20 words.  \n- Do not include explanations, only structured output.  \n- Always output in JSON format, matching exactly the keys of the required fields.\nOnly output valid JSON. \nDo not wrap the JSON in quotes.\nDo not include code fences like ```json or ``` at all.\nDo not add any text before or after the JSON object.\nYour output must start with { and end with }.  \n",
+              "role": "model"
+            },
+            {
+              "content": "=Extract the following details from this email for my job application tracker.\n\nEmail Subject:{{ $('Gmail Trigger').item.json.headers.subject }}   \nEmail Body:{{ $('Gmail Trigger').item.json.textAsHtml}}  \nDate : {{ $('Gmail Trigger').item.json.date }}\n\nOutput strictly in this JSON format:  \n{\n  \"Date Applied\": \"\",\n  \"Company Name\": \"\",\n  \"Job Title\": \"\",\n  \"Location\": \"\",\n  \"Recruiter Name\": \"\",\n  \"Recruiter Contact\": \"\",\n  \"Job Posting Link\": \"\",\n  \"Salary / Compensation\": \"\",\n  \"Job Type\": \"\",\n  \"Notes\": \"\"\n}\n"
+            }
+          ]
+        },
+        "simplify": false,
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        832,
+        -688
+      ],
+      "id": "1a2c4231-5e8e-435f-9ace-fd7ff2fad605",
+      "name": "Message a model",
+      "credentials": "[REDACTED]"
+    },
+    {
+      "parameters": {
+        "jsCode": "// This will take the JSON string from Gemini and turn it into an object\nreturn [\n  JSON.parse($json[\"candidates\"][0][\"content\"][\"parts\"][0][\"text\"])\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1184,
+        -688
+      ],
+      "id": "2ccb115d-d21e-498f-9700-a3ad5e5ce737",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1pxO6-h7tLT5us_fAHgHiuM32jdsDsxtCMuEjXvbImCw",
+          "mode": "list",
+          "cachedResultName": "Applied Jobs Tracking",
+          "cachedResultUrl": "[REDACTED_URL]"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "[REDACTED_URL]"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Date Applied": "={{ $json['Date Applied'] }}",
+            "Company Name": "={{ $json['Company Name'] }}",
+            "Location": "={{ $json.Location }}",
+            "Job Title": "={{ $json['Job Title'] }}",
+            "Recruiter Name": "={{ $json['Recruiter Name'] }}",
+            "Recruiter Contact": "={{ $json['Recruiter Contact'] }}",
+            "Job Posting Link": "={{ $json['Job Posting Link'] }}",
+            "Salary / Compensation": "={{ $json['Salary / Compensation'] }}",
+            "Job Type": "={{ $json['Job Type'] }}",
+            "Notes": "={{ $json.Notes }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Date Applied",
+              "displayName": "Date Applied",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Company Name",
+              "displayName": "Company Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Job Title",
+              "displayName": "Job Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Location",
+              "displayName": "Location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Recruiter Name",
+              "displayName": "Recruiter Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Recruiter Contact",
+              "displayName": "Recruiter Contact",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Job Posting Link",
+              "displayName": "Job Posting Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Salary / Compensation",
+              "displayName": "Salary / Compensation",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Job Type",
+              "displayName": "Job Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Notes",
+              "displayName": "Notes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1392,
+        -688
+      ],
+      "id": "34151671-60c7-460d-a3b0-3edd14908c28",
+      "name": "Append row in sheet",
+      "credentials": "[REDACTED]"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text Classifier": {
+      "main": [
+        [
+          {
+            "node": "Applied",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Interviews",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Tests ",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Job Alerts",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "LinkedIn messages",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Other LinkedIn",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Promotions",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Rejected",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Services",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Applied": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "[REDACTED_VERSION_ID]",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "[REDACTED_INSTANCE_ID]"
+  },
+  "id": "[REDACTED_WORKFLOW_ID]",
+  "tags": []
+}
